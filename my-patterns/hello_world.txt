@@ -1,0 +1,19 @@
+/* 
+  @title Hello world!
+  @by Priere, 3dNOW
+  @details My first pattern!
+  @url https://shiyouganai.dev/strudel/swatches
+*/
+
+let bass_line = "<<0!3 -3>@2 ~@2 4@2 ~ <2!3 5>>"
+let main_cpm = 160
+
+stack(
+  "<[0 1 2 3 7]>".scale("C5:blues").scaleTranspose("<0 1 3 5>").palindrome().note().sound("gm_flute").room(0.8).gain(0).someCyclesBy(0.3, x=>x.gain(0.3)),
+  n("<~ [3,5]*2 ~ <~!7 [4, 9]>>").scale('C3 minor pentatonic').sound("gm_shamisen").lpf(sine.range(300,3000).slow(16)).room(4).gain(0.5).delay("0.5:0.22:0.66"),
+  n(bass_line).scale('C2 minor pentatonic').sound("gm_acoustic_bass").gain(0.5),
+  sound("<~ ~ bd ~>").bank("RolandTR909").gain(0.3),
+  sound("bd(3,8,0)/4").bank("RolandTR909").gain(0.3),
+  sound("<<hh*2 [~ cp]> ~ [~ hh] <oh cp*2>>").bank("RolandTR808").room(0.3).gain(0.4),
+  sound("<sd [~ sd] ~ [~ sd]>").bank("RolandTR808").gain(0.3)
+).cpm(main_cpm).scope()

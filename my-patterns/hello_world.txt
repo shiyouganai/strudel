@@ -2,7 +2,7 @@
   @title Hello world!
   @by Priere, 3dNOW
   @details My first pattern!
-  @url https://shiyouganai.dev/strudel/swatches
+  @url https://shiyouganai.dev/strudel/swatch
 */
 
 let bass_line = "<<0!3 -3>@2 ~@2 4@2 ~ <2!3 5>>"

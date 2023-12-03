@@ -10,6 +10,10 @@ import { useSettings, setIsZen } from '../settings.mjs';
 // import { ReplContext } from './Repl';
 import './Repl.css';
 
+const { BASE_URL } = import.meta.env;
+const base = BASE_URL;
+const baseNoTrailing = base.endsWith('/') ? base.slice(0, -1) : base;
+
 export function Header({ context }) {
   const {
     embedded,
@@ -123,7 +127,7 @@ export function Header({ context }) {
           {!isEmbedded && (
             <a
               title="learn"
-              href="./workshop/getting-started"
+              href={`${baseNoTrailing}/workshop/getting-started`}
               className={cx('hover:opacity-50 flex items-center space-x-1', !isEmbedded ? 'p-2' : 'px-2')}
             >
               <AcademicCapIcon className="w-6 h-6" />

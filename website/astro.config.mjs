@@ -118,7 +118,7 @@ export default defineConfig({
     }),
   ],
   site,
-  base,
+  base: base,
   vite: {
     ssr: {
       // Example: Force a broken package to skip SSR processing, if needed

@@ -4,8 +4,7 @@ import './piano.mjs';
 import './files.mjs';
 
 const { BASE_URL } = import.meta.env;
-const base = BASE_URL;
-const baseNoTrailing = base.endsWith('/') ? base.slice(0, -1) : base;
+const baseNoTrailing = BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL;
 
 export async function prebake() {
   // https://archive.org/details/SalamanderGrandPianoV3
@@ -18,7 +17,7 @@ export async function prebake() {
     // => getting "window is not defined", as soon as "@strudel.cycles/soundfonts" is imported statically
     // seems to be a problem with soundfont2
     import('@strudel.cycles/soundfonts').then(({ registerSoundfonts }) => registerSoundfonts()),
-    samples(`${baseNoTrailing}/piano.json`, `./piano/`, { prebake: true }),
+    samples(`${baseNoTrailing}/piano.json`, `${baseNoTrailing}/piano/`, { prebake: true }),
     // https://github.com/sgossner/VCSL/
     // https://api.github.com/repositories/126427031/contents/
     // LICENSE: CC0 general-purpose

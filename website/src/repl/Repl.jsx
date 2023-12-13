@@ -17,13 +17,23 @@ import { prebake } from './prebake.mjs';
 import * as tunes from './tunes.mjs';
 import PlayCircleIcon from '@heroicons/react/20/solid/PlayCircleIcon';
 import { themes } from './themes.mjs';
-import { settingsMap, useSettings, setLatestCode, updateUserCode, setActivePattern } from '../settings.mjs';
+import {
+  settingsMap,
+  useSettings,
+  setLatestCode,
+  updateUserCode,
+  setActivePattern,
+  getActivePattern,
+  getUserPattern,
+  initUserCode,
+} from '../settings.mjs';
 import Loader from './Loader';
 import { settingPatterns } from '../settings.mjs';
 import { code2hash, hash2code } from './helpers.mjs';
 import { isTauri } from '../tauri.mjs';
 import { useWidgets } from '@strudel.cycles/react/src/hooks/useWidgets.mjs';
 import { writeText } from '@tauri-apps/api/clipboard';
+import { registerSamplesFromDB, userSamplesDBConfig } from './idbutils.mjs';
 
 const { latestCode } = settingsMap.get();
 
@@ -131,7 +141,6 @@ export function Repl({ embedded = false }) {
     isLineWrappingEnabled,
     panelPosition,
     isZen,
-    activePattern,
   } = useSettings();
 
   const paintOptions = useMemo(() => ({ fontFamily }), [fontFamily]);
@@ -177,6 +186,7 @@ export function Repl({ embedded = false }) {
       let msg;
       if (decoded) {
         setCode(decoded);
+        initUserCode(decoded);
         msg = `I have loaded the code from the URL.`;
       } else if (latestCode) {
         setCode(latestCode);
@@ -185,6 +195,8 @@ export function Repl({ embedded = false }) {
         setCode(randomTune);
         msg = `A random code snippet named "${name}" has been loaded!`;
       }
+      //registers samples that have been saved to the index DB
+      registerSamplesFromDB(userSamplesDBConfig);
       logger(`Welcome to Strudel! ${msg} Press play or hit ctrl+enter to run it!`, 'highlight');
       setPending(false);
     });
